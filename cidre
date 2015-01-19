@@ -5,12 +5,12 @@ use warnings;
 
 
 =for doc
-a << 24
-b << 16
-c <<  8
-d <<  0
+a a' <<  0
+b b' <<  8
+c c' <<  16
+d d' <<  24
 
-i a|b|c|d
+i a'|b'|c'|d'
 
 =cut
 
@@ -30,7 +30,7 @@ sub ai($)
 a i >> 24 & 255 
 b i >> 16 & 255 
 c i >>  8 & 255 
-d i 255 
+d i &  255 
 
 =cut
 
@@ -42,14 +42,29 @@ sub ia($)
 
 
 
+=for doc
 
-#-----test crap
+m  ~ (  ( 2 ** (32 - l) ) -1 );
 
+=cut
 
+sub b($)
+{
+	my $l = shift;
+
+	~(  ( 2 ** (32 - $l) ) -1 );
+}
 my $test;
+
 $test = shift;
-$, = ' ';
+$, = "\t";
 
 say "a", $test;
 say "i", ai $test;
 say "a'", ia ai $test; 
+say "l", 27;
+say "m", b 27;
+say "m'", ia b 27;
+say "m1", b 24;
+say "m1'", ia b 24;
+
