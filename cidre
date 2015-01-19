@@ -5,6 +5,7 @@ use warnings;
 
 
 =for doc
+
 a a' <<  0
 b b' <<  8
 c c' <<  16
@@ -41,7 +42,6 @@ sub ia($)
 }
 
 
-
 =for doc
 
 m  ~ (  ( 2 ** (32 - l) ) -1 );
@@ -54,6 +54,25 @@ sub b($)
 
 	~(  ( 2 ** (32 - $l) ) -1 );
 }
+
+=for doc
+
+nutin' fancy
+
+=cut
+
+sub l($)
+{
+	my $m = shift;
+	my $k = 31;
+	
+	$m = ~$m;
+	--$k while $m >>= 1;
+	$k; 
+}
+
+
+
 my $test;
 
 $test = shift;
@@ -62,9 +81,18 @@ $, = "\t";
 say "a", $test;
 say "i", ai $test;
 say "a'", ia ai $test; 
-say "l", 27;
-say "m", b 27;
-say "m'", ia b 27;
+say "l", 12;
+say "m", b 12;
+say "m'", ia b 12;
+say "l'", l b 12;
+say "l1", 24;
 say "m1", b 24;
 say "m1'", ia b 24;
+say "l1'", l b 24;
+say "la1", 11;
+say "na1", n ai $test, b 11;
+
+say "la2", 27;
+say "na2", n ai $test, b 27;
+
 
