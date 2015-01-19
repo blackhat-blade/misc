@@ -1,0 +1,55 @@
+#!perl
+
+use 5.012;
+use warnings;
+
+
+=for doc
+a << 24
+b << 16
+c <<  8
+d <<  0
+
+i a|b|c|d
+
+=cut
+
+sub ai($) 
+{
+	my $a = shift;
+	my @o;
+
+	@o = split /\./, $a;
+	
+	$o[3] | $o[2] << 8 | $o[1] << 16 | $o[0] <<24; 
+}
+
+
+=for doc
+
+a i >> 24 & 255 
+b i >> 16 & 255 
+c i >>  8 & 255 
+d i 255 
+
+=cut
+
+sub ia($)
+{
+	my $i = shift;
+	join '.', $i >> 24 & 255, $i >> 16 & 255, $i >> 8 & 255, $i & 255; 
+}
+
+
+
+
+#-----test crap
+
+
+my $test;
+$test = shift;
+$, = ' ';
+
+say "a", $test;
+say "i", ai $test;
+say "a'", ia ai $test; 
