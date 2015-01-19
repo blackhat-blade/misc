@@ -72,6 +72,18 @@ sub l($)
 }
 
 
+sub na ($$)
+{
+	my ($i, $m) = @_;
+	$i & $m;
+}
+
+sub ba ($$)
+{
+	my ($i, $m) = @_;
+	$i | ~$m;
+}
+
 
 my $test;
 
@@ -90,9 +102,13 @@ say "m1", b 24;
 say "m1'", ia b 24;
 say "l1'", l b 24;
 say "la1", 11;
-say "na1", n ai $test, b 11;
+say "ni1", na ai $test, b 11;
+say "na1", ia na ai $test, b 11;
+say "ba1", ia ba ai $test, b 11;
 
 say "la2", 27;
-say "na2", n ai $test, b 27;
-
+say "ni2", na ai $test, b 27;
+say "na2", ia na ai $test, b 27;
+say "ba2", ia ba ai $test, b 27;
+ 
 
