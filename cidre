@@ -84,6 +84,18 @@ sub ba ($$)
 	$i | ~$m;
 }
 
+sub allN($)
+{
+	my $i = shift;
+	my $m = ~0;
+
+
+        map { $i & ( $m >> $_ ) } 0 .. 32;
+	 
+	
+
+}
+
 
 my $test;
 
@@ -111,4 +123,9 @@ say "ni2", na ai $test, b 27;
 say "na2", ia na ai $test, b 27;
 say "ba2", ia ba ai $test, b 27;
  
+say "allN:";
+say {say $_ } allN ai $test;
 
+
+say "allN':";
+say map {say ia $_ } allN ai $test;
