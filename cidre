@@ -88,9 +88,43 @@ sub allN($)
 {
 	my $i = shift;
 	my $m = ~0;
+	my $c = 0;
 
-
-        map { $i & ( $m >> $_ ) } 0 .. 32;
+        #map { $i & ( $m >> $_ ) } 0 .. 32;
+	return (
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+		$i & ($m >> $c++),  
+	)
 	 
 	
 
@@ -124,8 +158,10 @@ say "na2", ia na ai $test, b 27;
 say "ba2", ia ba ai $test, b 27;
  
 say "allN:";
-say {say $_ } allN ai $test;
+#say map {$_ } allN ai $test;
+my @all = allN ai $test;
+say @all;
 
 
 say "allN':";
-say map {say ia $_ } allN ai $test;
+say map {ia $_ } allN ai $test;
