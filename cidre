@@ -97,6 +97,17 @@ sub allN($)
 }
 
 
+sub allNf($)
+{	 
+	my $i = shift;
+	my @r;
+
+	for my $a( 0 .. 32)
+	{
+		push @r, ($i & b $a);	
+	}	
+	@r
+}
 my $test;
 
 $test = shift;
@@ -123,11 +134,14 @@ say "ni2", na ai $test, b 27;
 say "na2", ia na ai $test, b 27;
 say "ba2", ia ba ai $test, b 27;
  
-say "allN:";
-#say map {$_ } allN ai $test;
-my @all = allN ai $test;
-say @all;
-
+say "allNa";
+say allN ai $test;
 
 say "allN':";
 say map {ia $_ } allN ai $test;
+
+
+
+
+
+
