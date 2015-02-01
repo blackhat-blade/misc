@@ -1,0 +1,37 @@
+Synopsys
+
+	This document describes the subtree allocated at urn:oid:1.3.6.1.4.1.45204.0.0
+	This document is not a specification, formal or otherwise.
+	This document is a draft, be sure to use the most recent version for reference. 
+
+Namespace root
+
+	The root of the smca namespace is:  urn:oid:1.3.6.1.4.1.45204.0.0
+	It is an independent sub assignment from: urn:oid:1.3.6.1.4.1.45204
+	Advised label is 'smca'.
+    Within this document the root node of the subtree might be referenced by smca(0).
+
+	Authority
+
+		Authority over smca(0) has been granted to the author of this document.
+		Individual subtree authority can be delegated to other parties.
+
+Tree structure
+	
+	Currently only a single subtree has been assigned:
+	  urn:oid:1.3.6.1.4.1.45204.0.0.1 or {smca(0)  identity(1)}
+
+	Identity arc
+
+		  					
+
+Every entity below {smca(0)} must have a formal specification.
+The formal specification must be a reference to another oid.
+The formal specification should not make references to entities outside the global oid arc.
+The formal specification should be based on public standards whenever possible.
+Once assigned, the formal specification must not change.
+The formal specification should be provable correct in its advised application domain.
+A formal specification should be accompanied by at least one verifier.
+A verifier is a computer program that validates a entity against its specification.
+
+# vim: set ts=4  sw=4
