@@ -108,6 +108,9 @@ sub allNf($)
 	}	
 	@r
 }
+
+
+=for oldtest
 my $test;
 
 $test = shift;
@@ -140,6 +143,36 @@ say allN ai $test;
 say "allN':";
 say map {ia $_ } allN ai $test;
 
+#=cut
+
+use integer;
+
+my $mmm = (ai(shift)  ) >> 24;
+say $mmm;
+#analyze @ARGV;
+#
+#while (@ARGV) 
+
+=cut
+my $t = [];
+
+sub ana
+{
+	say "atUN: '@_'";		
+	my $addr = shift;
+	my $i 	 = ai $addr;
+	my $bs   = 4;
+	my @f;
+	
+	say  (32 - ($x * 4));
+
+}		
+
+ 
+ana $_ for @ARGV;
+
+use Data::Dumper;
+print Dumper($t);
 
 
 
