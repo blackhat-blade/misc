@@ -158,21 +158,77 @@ my $t = [];
 
 sub ana
 {
-	say "atUN: '@_'";		
 	my $addr = shift;
+	return unless $addr;
 	my $i 	 = ai $addr;
-	my $bs   = 4;
-	my @f;
+	#my $bs   = 4;
+	#my @f;
+	#say  (32 - ($x * 4));
+	my (@nibs);
+	my $tc = $t;
+	@nibs =
+	(
+		$i >> 28 & 15,
+		$i >> 24 & 15, 
+		$i >> 20 & 15, 
+		$i >> 16 & 15, 
+		$i >> 12 & 15, 
+		$i >> 8  & 15, 
+		$i >> 4  & 15, 
+	     	$i 	 & 15,
+	);
+	#push @{$t}, \@nibs;
+
+	my $p;
+	push @{ $t->[ $nibs[0] ] -> [ $nibs[1] ] ->   [ $nibs[2] ] ->   [ $nibs[3] ] ->    [ $nibs[4] ] ->    [ $nibs[5] ] ->  
+ 		  [ $nibs[6] ] ->    [ $nibs[7] ]}, $addr ;
+
+	for my $i (0 .. 7)
+	{
+		++$tc->[16]; 
+		$tc = $tc->[ $nibs[$i++] ]; 
+ 		
+	}
 	
-	say  (32 - ($x * 4));
+	
+	#$p = [$addr, ($p ? @{$p} : () ) ];
+		 
+		
 
 }		
 
  
-ana $_ for @ARGV;
+ana $_ =~ s/\s+//gr while <>;
 
-use Data::Dumper;
-print Dumper($t);
+
+#use Data::Dumper;
+#print Dumper($t);
+sub dp
+{
+	my ($st, $p, $x, $avg) = (@_, 15);
+	$x = '' unless $x;
+	
+	for (0 .. 15)
+	{
+		my $c =  (ref $st->[$_] ?  ($st->[$_][16]) :  0);
+
+		next unless $c;
+		printf "%s %02i\t%s\n", $x, $_, $c;
+		dp($st->[$_ ], $_, $x . ' ') if $c;
+		
+	}
+}
+
+dp $t;
+
+#print join "\n", map { $_->[16]  } @{$t};
+
+#for (@{$t})
+#{
+#	
+#}
+
+
 
 
 
