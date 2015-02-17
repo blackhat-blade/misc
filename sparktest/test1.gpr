@@ -1,0 +1,16 @@
+project Test1 is
+
+   for Object_Dir use "build";
+
+   package Ide is
+      for Vcs_Kind use "Git";
+   end Ide;
+
+   for Source_Dirs use ();
+
+   package Naming is
+      for Casing use "lowercase";
+   end Naming;
+
+end Test1;
+

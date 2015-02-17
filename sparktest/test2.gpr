@@ -1,0 +1,18 @@
+project Test2 is
+
+   for Object_Dir use "build";
+
+   package Prove is
+      for Switches use ("-j4", "--report=all");
+   end Prove;
+
+   package Builder is
+      for Default_Switches ("ada") use ("-j4");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnatw.e", "-gnato", "-gnatVn", "-fstack-check", "-gnatE");
+   end Compiler;
+
+end Test2;
+

@@ -1,0 +1,37 @@
+#!/usr/bin/perl
+
+use 5.014;
+use warnings;
+
+
+
+my @list = qw/13 18887 226 56 128 9000 1255 6651 544 21 554 566 1 4 19999 155/; 
+
+
+my @sorted;
+
+@sorted  = sort  {$a <=> $b} @list;
+
+local $, = ' ';
+
+say "input =", @list;
+say "sorted =", @sorted;
+
+my $last = 0;
+
+my $avgdif;
+my $sum = 0;
+
+for my $x (0 .. $#sorted)
+{
+	#my $dif =  abs $last - $sorted[$i];
+	for my $y (0 .. $#sorted)
+	{
+		$sum += abs($x - $y); 		
+	}
+}
+
+say "difsum =", $sum;
+say "avgdif =", $sum / (@sorted );  
+
+say "foo =", sort {  abs($a - $b) cmp ($sum / @sorted)  } @sorted;
