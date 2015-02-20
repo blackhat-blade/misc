@@ -3,9 +3,6 @@
 use 5.014;
 use warnings;
 
-use Digest::Whirlpool;
-use Crypt::Rijndael;
-use Getopt::Long;
 use Bytes::Random::Secure 'random_string_from';
 
 our $VERSION = 0;
