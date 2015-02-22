@@ -6,11 +6,9 @@ SMCA-TEST-ONE-MIB DEFINITIONS ::= BEGIN
 --
 
 IMPORTS
-    MODULE-IDENTITY, OBJECT-TYPE, Integer32,
-    NOTIFICATION-TYPE                       FROM SNMPv2-SMI
-    SnmpAdminString                         FROM SNMP-FRAMEWORK-MIB
-    RowStatus, StorageType                  FROM SNMPv2-TC
-    InetAddressType, InetAddress            FROM INET-ADDRESS-MIB
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32 FROM SNMPv2-SMI
+    OBJECT-GROUP                  	    FROM SNMPv2-CONF
+--    InetAddressType, InetAddress            FROM INET-ADDRESS-MIB
 ;
 
 smcaTestOne MODULE-IDENTITY
@@ -22,12 +20,20 @@ smcaTestOne MODULE-IDENTITY
     DESCRIPTION  "Test MIB"
     REVISION "201502220000Z"
     DESCRIPTION  "First draft"
-    ::= { 1 3 6 1 4 1 45204 0 0 2 1 }
+    ::= { iso(1) org(3) dod(6) internet(1) private(4) enterprises(1) fourhorsemen(45204) sub(1) smca(1) management(2) mibs(2) 1 }
 
---
--- top level structure
---
-testOneScalars OBJECT IDENTIFIER ::= { smcaTestOne 1 }
+
+--testOneGroup OBJECT-GROUP
+--	OBJECTS 
+--	{
+--		testOneInteger
+--	}
+--	STATUS      current
+--	DESCRIPTION "Group 1 - an object group"
+--		::= {smcaTestOne groups(1) 1}
+
+
+--# testOneScalars OBJECT IDENTIFIER ::= { smcaTestOne items(2) 1 }
 --
 -- Example scalars
 --
@@ -43,6 +49,6 @@ testOneInteger OBJECT-TYPE
 
 	 This example object is implemented in the
 	 agent/mibgroup/examples/scalar_int.c file."
-    DEFVAL { 42 }
-    ::= { testOneScalars 1 }
+   -- DEFVAL { 42 }
+    ::= { smcaTestOne types(3) 1 }
 END
