@@ -2,8 +2,11 @@
 
 use 5.012;
 use warnings;
+use Getopt::Long; #maybe.. not.
 
+our $min = 0;
 
+GetOptions('mincount=i' => \$min);
 =for doc
 
 a a' <<  0
@@ -229,7 +232,9 @@ sub dp
 		
 		#$nar =  $x & 1 ?  ( ($pn >> 4) & 0x0f) | (($pn & 0x0f) << 4)  :$pn  ;
 		#$na  =  $x & 8 ?  ( ($nar >> 8) & 0x00FF00ff) | (($nar & 0x00ff00ff) << 8) : $nar ;
-		printf "%s %2s %15s %s %2i\n",' ' x $x , $_, $na, ' ' x (32 - $x),  $c;
+
+
+		printf "%s %2s %15s %s %2i\n",' ' x $x , $_, $na, ' ' x (32 - $x),  $c if $c >= $min;
 		dp($st->[$_ ], $na, $x + 1) if $c;
 		
 	}

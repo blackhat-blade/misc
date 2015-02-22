@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+use 5.014;
+use warnings;
+
+use Getopt::Long;
+use Bytes::Random::Secure 'random_string_from';
+
+our $VERSION = 0;
+our ($l, $abc);
+$l   = 14;
+$abc = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!"$%&/()=?<>;:,.-_#*';
+
+GetOptions("alphabet=s" => \$abc, "length=i" => \$l);
+
+say random_string_from($abc, $l);
