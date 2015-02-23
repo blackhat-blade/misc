@@ -5,7 +5,7 @@ IMPORTS
     OBJECT-GROUP                  	    FROM SNMPv2-CONF;
 
 pg-status-activity MODULE-IDENTITY
-    LAST-UPDATED "201502220000Z"
+    LAST-UPDATED "201502230000Z"
    
      
     ORGANIZATION "smca"
