@@ -24,7 +24,7 @@ databaseId OBJECT-TYPE
     SYNTAX      Integer32
     MAX-ACCESS  read-only
     STATUS	current
-    DESCRIPTION "id (a posgres oid) of the database this backend is connected to.
+    DESCRIPTION "id (a postgres oid) of the database this backend is connected to.
 		 this maps to pg_stat_activity/datid"
     ::= { pg-status-activity  1 }
 
@@ -33,8 +33,40 @@ databaseName OBJECT-TYPE
     MAX-ACCESS  read-only
     STATUS	current
     DESCRIPTION "name of the database this backend is connected to.
-		 this maps to pg_stat_activity/datid"
+		 this maps to pg_stat_activity/datname"
     ::= { pg-status-activity  2 }
+
+pid OBJECT-TYPE
+    SYNTAX	OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS	current
+    DESCRIPTION "Process id of this backend 
+		 this maps to pg_stat_activity/pid"
+    ::= { pg-status-activity  3 }
+
+userId OBJECT-TYPE
+    SYNTAX	Integer32
+    MAX-ACCESS  read-only
+    STATUS	current
+    DESCRIPTION "User id (a postgres oid) of the user connected to  this backend 
+		 this maps to pg_stat_activity/usesysid"
+    ::= { pg-status-activity  4 }
+
+userName OBJECT-TYPE
+    SYNTAX	OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS	current
+    DESCRIPTION "User name of the user connected to  this backend 
+		 this maps to pg_stat_activity/name"
+    ::= { pg-status-activity  5 }
+
+applicationName OBJECT-TYPE
+    SYNTAX	OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS	current
+    DESCRIPTION "Name of the application connected to  this backend 
+		 this maps to pg_stat_activity/name"
+    ::= { pg-status-activity  6 }
 
 
 
