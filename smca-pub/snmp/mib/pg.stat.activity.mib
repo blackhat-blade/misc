@@ -36,9 +36,17 @@ statusEntry OBJECT-TYPE
 	::= { statusTable 1}
 
 BackendPid ::= INTEGER (3 .. 65535)
-Oid		   ::= INTEGER
-RegClass   ::= Oid
-DatabaseId ::= RegClass
+
+Oid		   		::= INTEGER
+Name	   		::= VisibleString
+
+RegClass   		::= Oid
+
+DatabaseId 		::= RegClass
+DatabaseName	::= Name
+UserId			::= Oid
+UserName		::= Name
+
 
 StatusEntry ::=
 	SEQUENCE 
