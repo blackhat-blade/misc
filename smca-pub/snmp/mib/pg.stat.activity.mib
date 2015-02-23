@@ -35,12 +35,14 @@ statusEntry OBJECT-TYPE
     INDEX { pid }
 	::= { statusTable 1}
 
+BackendPid ::= INTEGER (3 .. 65535);
+
 StatusEntry ::=
 	SEQUENCE 
 	{
 		databaseId			Integer32,
 		databaseName		OCTET STRING,
-		pid					Integer32,
+		pid					BackendPid,
 		userId				Integer32,
 		userName			OCTET STRING,
 		applicationName		OCTET STRING,
@@ -73,7 +75,7 @@ databaseName OBJECT-TYPE
     ::= { statusEntry  2 }
 
 pid OBJECT-TYPE
-    SYNTAX	Integer32
+    SYNTAX BackendPid
     MAX-ACCESS  read-only
     STATUS	current
     DESCRIPTION "Process id of this backend 
