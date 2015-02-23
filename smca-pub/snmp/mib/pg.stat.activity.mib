@@ -35,7 +35,7 @@ statusEntry OBJECT-TYPE
     INDEX { pid }
 	::= { statusTable 1}
 
-BackendPid ::= INTEGER (3 .. 65535);
+BackendPid ::= INTEGER (3 .. 65535)
 
 StatusEntry ::=
 	SEQUENCE 
