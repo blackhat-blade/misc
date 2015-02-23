@@ -73,7 +73,7 @@ databaseName OBJECT-TYPE
     ::= { statusEntry  2 }
 
 pid OBJECT-TYPE
-    SYNTAX	OCTET STRING
+    SYNTAX	Integer32
     MAX-ACCESS  read-only
     STATUS	current
     DESCRIPTION "Process id of this backend 
