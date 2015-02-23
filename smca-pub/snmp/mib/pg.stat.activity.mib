@@ -1,5 +1,6 @@
 SMCA-MGMT-PG-STATUS-ACTIVITY-MIB DEFINITIONS ::= BEGIN
 
+
 IMPORTS
     MODULE-IDENTITY, OBJECT-TYPE, Integer32 FROM SNMPv2-SMI
     OBJECT-GROUP                  	    FROM SNMPv2-CONF;
@@ -11,14 +12,49 @@ pg-status-activity MODULE-IDENTITY
     ORGANIZATION "smca"
     CONTACT-INFO "email: nobody@sanemail.de"
     DESCRIPTION	 "Postgres Server status - mapping of pg_stat_activity view
-		  one row per server process holding information related to 
-		  the current activity of that process, such as state and current query"
+		  		  one row per server process holding information related to 
+		          the current activity of that process, such as state and current query"
     REVISION 	"201502230000Z"
     DESCRIPTION	"First draft"
     ::= { iso(1) org(3) dod(6) internet(1) private(4) enterprises(1) 
 	  fourhorsemen(45204) sub(1) smca(1) 
 	  management(2) postgres(2) status(1) 2 }
 
+statusTable OBJECT-TYPE 
+	SYNTAX SEQUENCE OF StatusEntry 
+	ACCESS not-accessible
+	STATUS current
+    DESCRIPTION "Status table, contains one entry per backend process"
+	::= {pg-status-activity 1}
+
+statusEntry OBJECT-TYPE
+	SYNTAX StatusEntry
+	ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "Status entry, describes the status of a single backend process"
+    INDEX { pid }
+	::= { statusTable 1}
+
+StatusEntry ::=
+	SEQUENCE 
+	{
+		databaseId			Integer32,
+		databaseName		OCTET STRING,
+		pid					Integer32,
+		userId				Integer32,
+		userName			OCTET STRING,
+		applicationName		OCTET STRING,
+		clientAddress		OCTET STRING,
+		clientHostname		OCTET STRING,
+		clientPort			Integer32,
+		backendStart		OCTET STRING,
+		transactionStart	OCTET STRING,
+		queryStart			OCTET STRING,
+		stateChange			OCTET STRING,
+		waiting				OCTET STRING,
+		state				OCTET STRING,
+		query				OCTET STRING
+	}
 
 databaseId OBJECT-TYPE
     SYNTAX      Integer32
@@ -26,7 +62,7 @@ databaseId OBJECT-TYPE
     STATUS	current
     DESCRIPTION "id (a postgres oid) of the database this backend is connected to.
 		 this maps to pg_stat_activity/datid"
-    ::= { pg-status-activity  1 }
+    ::= { statusEntry  1 }
 
 databaseName OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -34,7 +70,7 @@ databaseName OBJECT-TYPE
     STATUS	current
     DESCRIPTION "name of the database this backend is connected to.
 		 this maps to pg_stat_activity/datname"
-    ::= { pg-status-activity  2 }
+    ::= { statusEntry  2 }
 
 pid OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -42,7 +78,7 @@ pid OBJECT-TYPE
     STATUS	current
     DESCRIPTION "Process id of this backend 
 		 this maps to pg_stat_activity/pid"
-    ::= { pg-status-activity  3 }
+    ::= { statusEntry  3 }
 
 userId OBJECT-TYPE
     SYNTAX	Integer32
@@ -50,7 +86,7 @@ userId OBJECT-TYPE
     STATUS	current
     DESCRIPTION "User id (a postgres oid) of the user connected to  this backend 
 		 this maps to pg_stat_activity/usesysid"
-    ::= { pg-status-activity  4 }
+    ::= { statusEntry  4 }
 
 userName OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -58,7 +94,7 @@ userName OBJECT-TYPE
     STATUS	current
     DESCRIPTION "User name of the user connected to  this backend 
 		 this maps to pg_stat_activity/name"
-    ::= { pg-status-activity  5 }
+    ::= { statusEntry  5 }
 
 applicationName OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -66,7 +102,7 @@ applicationName OBJECT-TYPE
     STATUS	current
     DESCRIPTION "Name of the application connected to  this backend 
 		 this maps to pg_stat_activity/application_name"
-    ::= { pg-status-activity  6 }
+    ::= { statusEntry  6 }
 
 clientAddress OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -77,7 +113,7 @@ clientAddress OBJECT-TYPE
 		 connected via a Unix socket on server machine or that this is 
 		 an internal process such as autovacuum.
 		 this maps to pg_stat_activity/client_addr"
-    ::= { pg-status-activity  7 }
+    ::= { statusEntry  7 }
 
 clientHostname OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -87,7 +123,7 @@ clientHostname OBJECT-TYPE
 		 lookup of client_addr. This field will only be non-null for 
 		 IP connections, and only when log_hostname is enabled.
 		 this maps to pg_stat_activity/client_hostname"
-    ::= { pg-status-activity  8 }
+    ::= { statusEntry  8 }
 
 clientPort OBJECT-TYPE
     SYNTAX	Integer32
@@ -96,7 +132,7 @@ clientPort OBJECT-TYPE
     DESCRIPTION "TCP port number that the client is using for communication with
 		 this backend, or -1 if a Unix socket is used
 		 this maps to pg_stat_activity/client_port"
-    ::= { pg-status-activity  9 }
+    ::= { statusEntry  9 }
 
 backendStart OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -105,7 +141,7 @@ backendStart OBJECT-TYPE
     DESCRIPTION "Time when this process was started, i.e., when the client 
 		 connected to the server
 		 this maps to pg_stat_activity/backend_start"
-    ::= { pg-status-activity  10 }
+    ::= { statusEntry  10 }
 
 transactionStart OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -116,7 +152,7 @@ transactionStart OBJECT-TYPE
 		 is the first of its transaction, this column is equal to
 		 the query_start column.
 		 this maps to pg_stat_activity/xact_start"
-    ::= { pg-status-activity  11 }
+    ::= { statusEntry  11 }
 
 queryStart OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -125,7 +161,7 @@ queryStart OBJECT-TYPE
     DESCRIPTION "Time when the currently active query was started, or if
 		 state is not active, when the last query was started
 		 this maps to pg_stat_activity/query_start"
-    ::= { pg-status-activity  12 }
+    ::= { statusEntry  12 }
 
 stateChange OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -133,7 +169,7 @@ stateChange OBJECT-TYPE
     STATUS	current
     DESCRIPTION "Time when the state was last changed
 		 this maps to pg_stat_activity/state_change"
-    ::= { pg-status-activity  13 }
+    ::= { statusEntry  13 }
 
 waiting OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -141,7 +177,7 @@ waiting OBJECT-TYPE
     STATUS	current
     DESCRIPTION "True if this backend is currently waiting on a lock
 		 this maps to pg_stat_activity/waiting"
-    ::= { pg-status-activity  14 }
+    ::= { statusEntry  14 }
 
 state OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -162,7 +198,7 @@ state OBJECT-TYPE
 			This state is reported if track_activities is 
 			disabled in this backend.
 		 this maps to pg_stat_activity/state"
-    ::= { pg-status-activity  15 }
+    ::= { statusEntry  15 }
 
 query OBJECT-TYPE
     SYNTAX	OCTET STRING
@@ -172,8 +208,9 @@ query OBJECT-TYPE
 		 this field shows the currently executing query. In all 
 		 other states, it shows the last query that was executed.
 		 this maps to pg_stat_activity/query"
-    ::= { pg-status-activity  16 }
+    ::= { statusEntry  16 }
 
 
 
 END
+--vim set ts=4 sw=4
