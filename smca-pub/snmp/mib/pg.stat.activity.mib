@@ -10,11 +10,11 @@ pg-status-activity MODULE-IDENTITY
      
     ORGANIZATION "smca"
     CONTACT-INFO "email: nobody@sanemail.de"
-    DESCRIPTION  "Postgres Server status - mapping of pg_stat_activity view
-		  one ror per server process holding information related to 
+    DESCRIPTION	 "Postgres Server status - mapping of pg_stat_activity view
+		  one row per server process holding information related to 
 		  the current activity of that process, such as state and current query"
-    REVISION "201502230000Z"
-    DESCRIPTION  "First draft"
+    REVISION 	"201502230000Z"
+    DESCRIPTION	"First draft"
     ::= { iso(1) org(3) dod(6) internet(1) private(4) enterprises(1) 
 	  fourhorsemen(45204) sub(1) smca(1) 
 	  management(2) postgres(2) status(1) 2 }
@@ -24,6 +24,18 @@ databaseId OBJECT-TYPE
     SYNTAX      Integer32
     MAX-ACCESS  read-only
     STATUS	current
-    DESCRIPTION "id (a posgres oid) of the database this backend is connected to"
+    DESCRIPTION "id (a posgres oid) of the database this backend is connected to.
+		 this maps to pg_stat_activity/datid"
     ::= { pg-status-activity  1 }
+
+databaseName OBJECT-TYPE
+    SYNTAX	OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS	current
+    DESCRIPTION "name of the database this backend is connected to.
+		 this maps to pg_stat_activity/datid"
+    ::= { pg-status-activity  2 }
+
+
+
 END
