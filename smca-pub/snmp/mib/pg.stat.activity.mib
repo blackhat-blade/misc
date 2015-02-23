@@ -38,7 +38,7 @@ statusEntry OBJECT-TYPE
 BackendPid ::= INTEGER (3 .. 65535)
 Oid		   ::= INTEGER
 RegClass   ::= Oid
-DatabaseId ::= Regclass
+DatabaseId ::= RegClass
 
 StatusEntry ::=
 	SEQUENCE 
