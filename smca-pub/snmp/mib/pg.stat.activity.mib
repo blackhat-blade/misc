@@ -22,14 +22,14 @@ pg-status-activity MODULE-IDENTITY
 
 statusTable OBJECT-TYPE 
 	SYNTAX SEQUENCE OF StatusEntry 
-	ACCESS not-accessible
+	MAX-ACCESS not-accessible
 	STATUS current
     DESCRIPTION "Status table, contains one entry per backend process"
 	::= {pg-status-activity 1}
 
 statusEntry OBJECT-TYPE
 	SYNTAX StatusEntry
-	ACCESS not-accessible
+	MAX-ACCESS not-accessible
 	STATUS current
 	DESCRIPTION "Status entry, describes the status of a single backend process"
     INDEX { pid }
