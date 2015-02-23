@@ -43,7 +43,7 @@ DatabaseId ::= RegClass
 StatusEntry ::=
 	SEQUENCE 
 	{
-		databaseId			Integer32,
+		databaseId			DatabaseId,
 		databaseName		OCTET STRING,
 		pid					BackendPid,
 		userId				Integer32,
@@ -62,7 +62,7 @@ StatusEntry ::=
 	}
 
 databaseId OBJECT-TYPE
-    SYNTAX      Integer32
+    SYNTAX		DatabaseId
     MAX-ACCESS  read-only
     STATUS	current
     DESCRIPTION "id (a postgres oid) of the database this backend is connected to.
