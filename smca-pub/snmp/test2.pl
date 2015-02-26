@@ -6,7 +6,7 @@ use warnings;
 use Data::Dumper;
 
 use Moose::Meta::Class;
-#use Moose::Meta::Attribute;
+use Moose::Meta::Attribute;
 
 
 my $file       = shift;
@@ -36,7 +36,7 @@ $moduleClass = Moose::Meta::Class->create($moduleClassName);
 
 
 
-$moduleClass->add_attribute('module', is => 'ro', default => $moduleName ); 
+#$moduleClass->add_attribute('module', is => 'ro', default => $moduleName ); 
 #Moose::Meta::Attribute->new( 'module', is => 'ro');
 #$moduleClass->add_attribute();
 
