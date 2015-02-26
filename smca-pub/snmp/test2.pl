@@ -5,6 +5,8 @@ use warnings;
 
 use Data::Dumper;
 
+use Moose;
+
 my $file   = shift;
 my $module = shift;
 
