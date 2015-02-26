@@ -41,7 +41,27 @@ for (qw/name description organization contact identity path language/)
 		$moduleClass->add_attribute($_, is => 'ro', init_arg => undef, default => $moduleData->{$_});
 }
 
-my $rvcName = join, '::', $moduleClassName, 'Revision'; 
+my $rvcName = join '::', $moduleClassName, 'Revision'; 
+my $rvc = Moose::Meta::Class->create($rvcName);
+
+my $mr = sub 
+{
+		my		$c;
+		my $i = shift;
+		my $date = shift;
+		my $dsc  = shift;
+
+		$c = Moose::Meta::Class->create($rvcName . $i);
+		$c->superclasses( $rvc );
+		$c->add_attribute(date => is => ro =>  init_arg => undef, default => $date);
+		$c->add_attribute(description => is => ro =>  init_arg => undef, default => $dsc);
+		return $c; 
+};
+
+
+
+
+
 
 
 
