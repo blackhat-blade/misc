@@ -5,6 +5,7 @@ use warnings;
 
 use Data::Dumper;
 
+use Moose;
 use Moose::Meta::Class;
 use Moose::Meta::Attribute;
 
@@ -35,10 +36,11 @@ say "moduleClassName = $moduleClassName";
 $moduleClass = Moose::Meta::Class->create($moduleClassName);
 
 
+for (qw/name description organization contact identity path language/)
+{
+		$moduleClass->add_attribute($_, is => 'ro', init_arg => undef, default => $moduleData->{$_});
+}
 
-#$moduleClass->add_attribute('module', is => 'ro', default => $moduleName ); 
-#Moose::Meta::Attribute->new( 'module', is => 'ro');
-#$moduleClass->add_attribute();
 
 
-print Dumper ($moduleClass );
+print Dumper ($moduleClass->new_object );
