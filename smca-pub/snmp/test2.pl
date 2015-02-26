@@ -5,19 +5,28 @@ use warnings;
 
 use Data::Dumper;
 
-use Moose;
+#use Moose;
 
-my $file   = shift;
-my $module = shift;
+my $file       = shift;
+my $moduleName = shift;
 
 my $data = do $file or die "oops: $!/$@";
-my $mod;
+
+my $moduleData;
+my $moduleClassName;
+my $moduleClass;
 
 
-die "no module given " unless $module;
 
-die "module $module not found" unless $data->{$module};
+die "no module given " unless $moduleName;
 
-$mod = $data->{$module};
+die "module $moduleName not found" unless $data->{$moduleName};
 
-print Dumper ($mod);
+$moduleData = $data->{$moduleName};
+
+print Dumper ($moduleData );
+
+$moduleClassName = join '::', map {ucfirst lc } split '-', $moduleName;
+
+say "moduleClassName = $moduleClassName"; 
+
