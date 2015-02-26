@@ -41,6 +41,8 @@ for (qw/name description organization contact identity path language/)
 		$moduleClass->add_attribute($_, is => 'ro', init_arg => undef, default => $moduleData->{$_});
 }
 
+my $rvcName = join, '::', $moduleClassName, 'Revision'; 
+
 
 
 print Dumper ($moduleClass->new_object );
