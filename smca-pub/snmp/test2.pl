@@ -5,7 +5,7 @@ use warnings;
 
 use Data::Dumper;
 
-my $file = 'mibs/pg.stat.activity.dmp.pl';
+my $file = 'mib/pg.stat.activity.dmp.pl';
 my $data = do $file or die "oops: $@";
 
 print Dumper ($data);
