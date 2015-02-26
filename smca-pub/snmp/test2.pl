@@ -5,7 +5,7 @@ use warnings;
 
 use Data::Dumper;
 
-#use Moose;
+use Moose::Meta::Class;
 
 my $file       = shift;
 my $moduleName = shift;
@@ -24,9 +24,12 @@ die "module $moduleName not found" unless $data->{$moduleName};
 
 $moduleData = $data->{$moduleName};
 
-print Dumper ($moduleData );
+#print Dumper ($moduleData );
 
 $moduleClassName = join '::', map {ucfirst lc } split '-', $moduleName;
 
 say "moduleClassName = $moduleClassName"; 
 
+$moduleClass = Moose::Meta::Class->create($moduleClassName);
+
+print Dumper ($moduleClass );
