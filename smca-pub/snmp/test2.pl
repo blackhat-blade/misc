@@ -2,6 +2,8 @@
 
 use 5.014;
 use warnings;
+use lib "./perl_lib";
+use Smca::Mgmt;
 
 use Data::Dumper;
 
@@ -70,4 +72,24 @@ $moduleClass->add_attribute('revisions', is => 'ro',
 							init_arg => undef );
 
 
+my $typebaseclass = Moose::Meta::Class->create(join '::', $moduleClassName, 'Type');
+
+my @types = keys %{$moduleData->{typedefs}};
+my %types;
+
+foreach my $type (@types)
+{
+		my $typedata  = $moduleData->{typedefs}->{$type};
+		my $typeclass = Moose::Meta::Class->create(join '::', $moduleClassName, 'Type', $type);
+
+		$typeclass->superclasses($typebaseclass->name);
+
+
+		$types{$type} = $typeclass;
+} 
+
+
+
+
 print Dumper ($moduleClass->new_object );
+print Dumper ($moduleClass );
