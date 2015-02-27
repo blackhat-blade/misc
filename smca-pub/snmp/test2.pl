@@ -27,7 +27,7 @@ die "module $moduleName not found" unless $data->{$moduleName};
 
 $moduleData = $data->{$moduleName};
 
-print Dumper ($moduleData );
+#print Dumper ($moduleData );
 
 $moduleClassName = join '::', map {ucfirst lc } split '-', $moduleName;
 
@@ -36,33 +36,38 @@ say "moduleClassName = $moduleClassName";
 $moduleClass = Moose::Meta::Class->create($moduleClassName);
 
 
-for (qw/name description organization contact identity path language/)
+for (qw/name description organization contact identity path language references/)
 {
 		$moduleClass->add_attribute($_, is => 'ro', init_arg => undef, default => $moduleData->{$_});
 }
 
 my $rvcName = join '::', $moduleClassName, 'Revision'; 
-my $rvc = Moose::Meta::Class->create($rvcName);
+my $rvc     = Moose::Meta::Class->create($rvcName);
 
 my $mr = sub 
 {
 		my		$c;
-		my $i = shift;
 		my $date = shift;
 		my $dsc  = shift;
 
-		$c = Moose::Meta::Class->create($rvcName . $i);
-		$c->superclasses( $rvc );
+		state $i = 0;
+ 
+		$c = Moose::Meta::Class->create($rvcName . ++$i);
+		$c->superclasses( $rvcName );
 		$c->add_attribute(date => is => ro =>  init_arg => undef, default => $date);
 		$c->add_attribute(description => is => ro =>  init_arg => undef, default => $dsc);
 		return $c; 
 };
 
+my @revisionClasses = map { $mr->($_->{date}, $_->{description}) } 
+                        sort { ( $a->{date} =~ s/\D//rg ) <=> ( $b->{date} =~ s/\D//rg ) } 
+                          @{$moduleData->{revisions}};
 
 
-
-
-
+$moduleClass->add_attribute('revisions', is => 'ro', 
+                            isa      => "ArrayRef[${rvcName}]",
+							default  => sub {[ map {$_->new_object} @revisionClasses ]},
+							init_arg => undef );
 
 
 print Dumper ($moduleClass->new_object );
