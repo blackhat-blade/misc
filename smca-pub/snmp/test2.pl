@@ -35,8 +35,9 @@ $moduleClassName = join '::', map {ucfirst lc } split '-', $moduleName;
 
 say "moduleClassName = $moduleClassName"; 
 
-$moduleClass = Moose::Meta::Class->create($moduleClassName);
+#$moduleClass = Moose::Meta::Class->create($moduleClassName);
 
+$moduleClass = Smca::Mgmt::Meta->create($moduleClassName, object_identifier => $moduleName, object_type => 'module');
 
 for (qw/name description organization contact identity path language references/)
 {
@@ -91,5 +92,5 @@ foreach my $type (@types)
 
 
 
-print Dumper ($moduleClass->new_object );
-print Dumper ($moduleClass );
+#print Dumper ($moduleClass->new_object );
+#print Dumper ($moduleClass );
