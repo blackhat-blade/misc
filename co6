@@ -11,12 +11,22 @@ my $pat = "A4xxA32xA4xA32xA4xA2xA8xA8xA2xA8xA8xxA11xAxA8x";
 
 while (<>)
 {
-	say "line = ", $_;
+#	say "line = ", $_;
 	my %r; 
 	@r{ 'id', 'localip_raw', 'localport', 'remoteip_raw', 
-            'remoteport', 'status', 'txq', 'rxq','timeractive','timerexpire', 'rto_timeouts', 'uid', 'u_probes', 'inode'} =
+            'remoteport', 'status', 'txq', 'rxq','timeractive','timerexpire', 
+            'rto_timeouts', 'uid', 'u_probes', 'inode'} =
+
           eval {unpack $pat, $_ };
 	warn $@ if $@;
+	
+
+#	$r{localip} = join,  unpack '(A2)16' , $r{localip_raw};
+
+	say "x = ", join ':', unpack '(A4)8', join '',  (unpack '(A2)16',  $r{localip_raw})[qw/3 2 1 0 7 6 5 4 11 10 9 8 15 14 13 12/];
+
+	
+	next;
 
 	while (my ($k,$v) = each %r )
 	{
