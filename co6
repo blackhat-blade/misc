@@ -23,8 +23,13 @@ while (<>)
 
 #	$r{localip} = join,  unpack '(A2)16' , $r{localip_raw};
 
-	say "x = ", join ':', unpack '(A4)8', join '',  (unpack '(A2)16',  $r{localip_raw})[qw/3 2 1 0 7 6 5 4 11 10 9 8 15 14 13 12/];
+	say "ref = ", join ':', unpack '(A4)8', join '',  (unpack '(A2)16',  $r{localip_raw})[qw/3 2 1 0 7 6 5 4 11 10 9 8 15 14 13 12/];
 
+	#say "t = ",  $r{localip_raw} =~  s!\G(..)+!say "s = $1" !reg; 
+	say "t = ",    $r{localip_raw} =~  s!(..)(..)(..)(..)!$4$3:$2$1:!rg  =~ s!:$!!rg; 
+	#my $x;
+	#$x .= "$4$3:$2$1:" while $r{localip_raw} =~ /(..)(..)(..)(..)/g;
+	#say "t = ", $x;
 	
 	next;
 
