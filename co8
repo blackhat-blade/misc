@@ -8,21 +8,38 @@ no warnings 'uninitialized';
 my $str =  ' /localiplocalportremoteipremoteportstatusuidinodeprocnettcp6';
 
 $, = "\n"; 
+$" = "/";
 
-sub u{unpack$_[0]=~s/(.)/'A'.(ord ($1)-42)/erg,$_[1]};
+sub u{eval{ unpack$_[0]=~s/([^a-z])/'A'.(ord ($1)-42)/erg,$_[1]} }
+sub i{$_[1] =~ s!(..)(..)(..)(..)!$4$3:$2$1:!rg  =~ s!:$!!rg;}
 
-#asub a { 'A' . $_[0]  }
-#s/(.)/'A' . chr $1 - 42 /er
-#my @s = unpack q(++13240-/.-.) =~ s/(.)/'A' . (ord($1) - 42) /erg, $str;
-#my @s =  unpack 'AAA7A9A8A10A6A3A5A4A3A4', $str;
-#amy @s =  unpack 'AAA7A9A8A10A6A3A5A4A3A4', $str;
 
 my @s = u '++13240-/.-.' ,$str;
+my $p = "</@s[9..11 ]";
 
+my %r;
 my $d = shift;
 
 print @s;
 print "\n";
+
+print "p=$p";
+open p,$p;
+
+
+while (<p>)
+{
+	#"A4xxA32xA4xA32xA4xA2xA8xA8xA2xA8xA8xxA11xAxA8x";
+	@r{@s[ 3 , 2, 5, 4 ],'rest'} = u ".xxJx.xJx.x,x2x2x,x2x2xx5x+x2x", $_;
+ 
+	
+	while (my ($k,$v) = each %r )
+	{
+		printf "%-24s %s\n", $k, $v;
+	}
+	say '--';
+	
+}
 
 
 
@@ -35,16 +52,6 @@ if ($d)
 }
 
 
-#print @s[1,0];
-
-
-#no strict 'refs';
-#my @f = map {   \%&CORE::}  unpack 'A6X4A4A4A7X6A6', $str;
-
-#use strict 'refs';
-#my $f = sub { *{$_[0]}{CODE}};
-
-#print @f;
 
 __END__
 my $pat = "A4xxA32xA4xA32xA4xA2xA8xA8xA2xA8xA8xxA11xAxA8x";
