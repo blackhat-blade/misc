@@ -5,12 +5,19 @@ use warnings;
 
 no warnings 'uninitialized';
 
-my $str =  ' /unpackpushsprintflocaliplocalportremoteipremoteportstatusuidinodeprocnettcp6';
+my $str =  ' /localiplocalportremoteipremoteportstatusuidinodeprocnettcp6';
 
 $, = "\n"; 
 
-my @s =  unpack 'AAA6X4A4A4A7X6A6A7A9A8A10A6A3A5A4A3A4', $str;
+sub u{unpack$_[0]=~s/(.)/'A'.(ord ($1)-42)/erg,$_[1]};
 
+#asub a { 'A' . $_[0]  }
+#s/(.)/'A' . chr $1 - 42 /er
+#my @s = unpack q(++13240-/.-.) =~ s/(.)/'A' . (ord($1) - 42) /erg, $str;
+#my @s =  unpack 'AAA7A9A8A10A6A3A5A4A3A4', $str;
+#amy @s =  unpack 'AAA7A9A8A10A6A3A5A4A3A4', $str;
+
+my @s = u '++13240-/.-.' ,$str;
 
 my $d = shift;
 
