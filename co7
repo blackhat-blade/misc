@@ -1,0 +1,32 @@
+#!/usr/bin/perl 
+use strict;
+use 5.012;
+use warnings;
+
+no warnings 'uninitialized';
+
+my $pat = "A4xxA32xA4xA32xA4xA2xA8xA8xA2xA8xA8xxA11xAxA8x";
+
+
+while (<>)
+{
+#	say "line = ", $_;
+	my %r; 
+	@r{ 'id', 'localip_raw', 'localport', 'remoteip_raw', 
+            'remoteport', 'status', 'txq', 'rxq','timeractive','timerexpire', 
+            'rto_timeouts', 'uid', 'u_probes', 'inode'} =
+
+          eval {unpack $pat, $_ };
+	warn $@ if $@;
+	say "t = ",    $r{localip_raw} =~  s!(..)(..)(..)(..)!$4$3:$2$1:!rg  =~ s!:$!!rg; 
+	
+	next;
+
+	while (my ($k,$v) = each %r )
+	{
+		printf "%-24s %s\n", $k, $v;
+	}
+	say '--';
+}
+
+
