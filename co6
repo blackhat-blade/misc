@@ -3,6 +3,31 @@ use strict;
 use 5.012;
 use warnings;
 
+
+@ARGV = '/proc/net/tcp6';
+my @r;
+<>;
+$,="\n";
+$:=":";
+
+my %a;
+
+$a{(eval{ unpack 'x44A32',$_})[0] =~ s/(..)(..)(..)(..)/\L$4$3:$2$1:/gr =~ s!:$!!r}++  while <>;
+@r = map {[$a{$_},$_] } keys %a;
+map {printf "%4d\t%s\n", @{$_} } sort {$a->[0] <=> $b->[0] } @r;
+
+
+__END__
+my @res;
+my %res;
+
+@res = sort {$a{$a} <=> $a{$b} } keys %a;
+
+
+print @res;
+
+
+__END__
 no warnings 'uninitialized';
 
 my $str =  ' /linelocaliplocalportremoteipremoteportstatusuidinodeprocnettcp6ESTABLISHEDSYN_SENTSYN_RECVFIN_WAIT1FIN_WAIT2TIME_WAITCLOSECLOSE_WAITLAST_ACKLISTENCLOSING';
@@ -20,7 +45,7 @@ sub u{eval{ unpack$_[0]=~s/([^a-z])/'A'.(ord ($1)-42)/erg,$_[1]} }
 sub i{$_[0] =~ s!(..)(..)(..)(..)!\L$4$3:$2$1:!rg  =~ s!:$!!rg;}
 sub n{@_}
 sub h{ hex shift}
-sub S{@s[ h($_[0])+12]}
+sub S{@s[h($_[0])+12]}
 
  @s = u '++.13240-/.-.' ,$str;
 my $p = "</@s[10..12 ]";
