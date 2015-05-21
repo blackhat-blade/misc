@@ -7,71 +7,16 @@ use warnings;
 $o = (grep /-l/, @ARGV  ) ? 6 : 44;
 @ARGV = '/proc/net/tcp6';
 <>;
-$a{( unpack "x${o}A32",$_)[0] =~ s/(..)(..)(..)(..)/\L$4$3:$2$1:/gr =~ s!:$!!r}++  while <>;
+while (<>)
+{
+/.{6}0{20}/ && next; 
+$_= (unpack "x${o}A32",$_)[0];
+$_ =~ s/(..)(..)(..)(..)/\L$4$3:$2$1:/g;
+$_ =~ s!:$!! ;
+
+$a{$_}++
+
+}
 
 map {printf "%4d\t%s\n", @{$_} } sort {$a->[0] <=> $b->[0] } map {[$a{$_},$_] } keys %a;
-
-
-__END__
-my @res;
-my %res;
-
-@res = sort {$a{$a} <=> $a{$b} } keys %a;
-
-
-print @res;
-
-
-__END__
-no warnings 'uninitialized';
-
-my $str =  ' /linelocaliplocalportremoteipremoteportstatusuidinodeprocnettcp6ESTABLISHEDSYN_SENTSYN_RECVFIN_WAIT1FIN_WAIT2TIME_WAITCLOSECLOSE_WAITLAST_ACKLISTENCLOSING';
-
-$, = "\n"; 
-$" = "/";
-
-my @s;
-
-
-
-
-
-sub u{eval{ unpack$_[0]=~s/([^a-z])/'A'.(ord ($1)-42)/erg,$_[1]} }
-sub i{$_[0] =~ s!(..)(..)(..)(..)!\L$4$3:$2$1:!rg  =~ s!:$!!rg;}
-sub n{@_}
-sub h{ hex shift}
-sub S{@s[h($_[0])+12]}
-
- @s = u '++.13240-/.-.' ,$str;
-my $p = "</@s[10..12 ]";
-
-my %r;
-my $d = shift;
-
-print @s;
-print "\n";
-
-print "p=$p";
-open p,$p;
-
-my %o = map{$_ , 1} grep {s!^--!!} @ARGV;
-
-
-
-#__END__
-while (<p>)
-{
-	say $_;
-	#"A4xxA32xA4xA32xA4xA2xA8xA8xA2xA8xA8xxA11xAxA8x";
-	my $i=0;
-	@r{@s[2, 3 , 4, 5, 6, 7 ],'rest'} = map { ((\&n,\&i,\&h, \&i, \&h,\&S)[$i++] || \&n )->($_)  } u ".xxJx.xJx.x,x2x2x,x2x2xx5x+x2x", $_;
-	
-
-	while (my ($k,$v) = each %r )
-	{
-		printf "%-24s %s\n", $k, $v;
-	}
-	say '--';
-	
-}
 
