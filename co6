@@ -1,20 +1,15 @@
 #!/usr/bin/perl 
-use strict;
-use 5.012;
+#use strict;
+#use 5.012;
 use warnings;
 
 
+$o = (grep /-l/, @ARGV  ) ? 6 : 44;
 @ARGV = '/proc/net/tcp6';
-my @r;
 <>;
-$,="\n";
-$:=":";
+$a{( unpack "x${o}A32",$_)[0] =~ s/(..)(..)(..)(..)/\L$4$3:$2$1:/gr =~ s!:$!!r}++  while <>;
 
-my %a;
-
-$a{(eval{ unpack 'x44A32',$_})[0] =~ s/(..)(..)(..)(..)/\L$4$3:$2$1:/gr =~ s!:$!!r}++  while <>;
-@r = map {[$a{$_},$_] } keys %a;
-map {printf "%4d\t%s\n", @{$_} } sort {$a->[0] <=> $b->[0] } @r;
+map {printf "%4d\t%s\n", @{$_} } sort {$a->[0] <=> $b->[0] } map {[$a{$_},$_] } keys %a;
 
 
 __END__
