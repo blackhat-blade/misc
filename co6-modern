@@ -1,0 +1,5 @@
+perl -e '$o=(grep/-l/,@ARGV)?6:44;@ARGV="/proc/net/tcp6";<>;$a{ (unpack"x${o}A32",$_)[0]=~s/(..)(..)(..)(..)/\L$4$3:$2$1:/gr=~s!:$!!r}++  while <>; map{printf "%4d\t%s\n", @{$_}}sort{$a->[0]<=>$b->[0]}map{[$a{$_},$_] }keys %a'
+
+
+
+perl -e '$o=(grep/-l/,@ARGV)?6:44;;<>;$a{ (unpack"x${o}A32",$_)[0]=~s/(..)(..)(..)(..)/\L$4$3:$2$1:/gr=~s!:$!!r}++  while <>; map{printf "%4d\t%s\n", @{$_}}sort{$a->[0]<=>$b->[0]}map{[$a{$_},$_] }keys %a'
