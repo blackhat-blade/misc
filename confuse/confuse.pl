@@ -1,9 +1,12 @@
-#!/usr/bin/perl -w
-use strict;
+#!/usr/bin/perl
+use 5.012;
+use warnings;
 
 use Data::Dumper;
 
-#use blib;
+
+
+
 use Fuse qw(fuse_get_context);
 use POSIX qw(ENOENT EISDIR EINVAL);
 
