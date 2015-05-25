@@ -39,6 +39,16 @@ sub check
 	return exists $self->childs->{$name};
 }
 
+sub checkpath
+{
+	my ($self, $path) = @_;
+	my ($part, @rest) = (@{$path});
+
+	return 0 unless $self->check($part);
+	return 1 if     @rest == 1;
+	return $self->checkpath(\@rest);
+}
+
 
 sub del
 {
@@ -102,6 +112,6 @@ $node1->add('subnode2', $node3 );
 $node2->add('subsubnode1', $node4 );
 $node4->add('subsubnode2', $node5 );
 
-say $node1->check('subnode1');
-say $node1->check('subnode2');
-say $node1->check('subsubnode2');
+say $node1->checkpath([qw/subnode1 subsubnode1/]);
+#say $node1->check('subnode2');
+#say $node1->check('subsubnode2');
