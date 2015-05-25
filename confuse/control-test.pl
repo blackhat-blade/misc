@@ -26,6 +26,14 @@ sub add
 	$self->childs->{$name} =  $o->instancify($self,  $name);   
 }
 
+sub get
+{
+	my ($self, $name) = @_;
+	die "NOENT" unless exists $self->childs->{$name};
+	return  $self->childs->{$name};
+}
+
+
 sub del
 {
 	my ($self, $name) = @_;
@@ -76,38 +84,19 @@ sub env
 
 package main;
 
-#print Dumper (graphitem->new);
 my $node1 = node->new(data => {node => "node1", foodata => 'foo'} );
 my $node2 = node->new(data => {node => "node2", bardata => 'bar'} );
 my $node3 = node->new(data => {node => "node3"} );
 my $node4 = node->new(data => {node => "node4"} );
-my $node5 = node->new(data => {node => "node5"} );
+my $node5 = node->new(data => {node => "node5", bardata => 'other'} );
 
-#print Dumper ( $node1, $node2);
-
-
-#say "---" x 40;
-
-#$node1->add('subnode1', $node2 );
-#$node1->add('subnode2', $node3 );
-#$node3->add('subsubnode1', $node4 );
-#$node3->add('subsubnode2', $node5 );
 $,= "\t";
-#say  $_->data->{node}, $_->list for $node1,$node2,$node3,$node4,$node5;
-#say  $_->env('foodata') for $node1,$node2,$node3,$node4,$node5;
-#print Dumper ( $node1, $node2);
-
-
 
 $node1->add('subnode1', $node2 );
 $node1->add('subnode2', $node3 );
 $node2->add('subsubnode1', $node4 );
 $node4->add('subsubnode2', $node5 );
 
-
-
-print Dumper($node1->getall);
-
-say $_->name, $_->env('node'),  $_->env('foodata'), $_->env('bardata') for $node1->getsubtree;
-
-
+say $node1->get('subnode1')->name;
+say $node1->get('subnode2')->name;
+say $node1->get('subsubnode2')->name;
