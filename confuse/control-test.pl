@@ -33,6 +33,12 @@ sub get
 	return  $self->childs->{$name};
 }
 
+sub check
+{
+	my ($self, $name) = @_;
+	return exists $self->childs->{$name};
+}
+
 
 sub del
 {
@@ -60,7 +66,6 @@ sub instancify
 	my ($self, $parent, $name) = @_;
 	$self->instanceclass->meta->rebless_instance($self, parent => $parent, name  => $name);
 	$self;
-	#nodeinstance->new( node => $self, parent => $parent, name => $name );
 }
 
 
@@ -97,6 +102,6 @@ $node1->add('subnode2', $node3 );
 $node2->add('subsubnode1', $node4 );
 $node4->add('subsubnode2', $node5 );
 
-say $node1->get('subnode1')->name;
-say $node1->get('subnode2')->name;
-say $node1->get('subsubnode2')->name;
+say $node1->check('subnode1');
+say $node1->check('subnode2');
+say $node1->check('subsubnode2');
