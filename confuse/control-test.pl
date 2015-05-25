@@ -4,13 +4,7 @@ use warnings;
 
 use Data::Dumper;
 
-
-
 use Moose;
-#use Moose::Meta::Class;
-#use Moose::Meta::Attribute;
-
-
 
 package graphitem;
 use Moose;
@@ -115,44 +109,3 @@ print Dumper($node1->getall);
 say $_->name, $_->env('node'),  $_->env('foodata'), $_->env('bardata') for $node1->getsubtree;
 
 
-
-#say  $_->env('foodata') for $node2,$node3,$node4,$node5;
-
-=for plan
-
-
-graphitem
-{
-	item
-	data
-}
-
-node
-{
-	%childs
-}
-
-nodeinstance
-{
-	item
-	parent
-	name
-	%childs
-	env
-}
-
-leaf
-{
-	content
-}
-
-leafinstance
-{
-	content
-	parent
-	name
-	env
-}
-
-
-=cut
