@@ -15,7 +15,7 @@ package node;
 use Moose;
 extends 'graphitem';
 has childs => (is => 'ro', isa => "HashRef", default => sub {return {} });
-
+has instanceclass => (is => 'ro', default => "nodeinstance");
 sub list{ return keys %{shift->childs} }
 
 sub add 
@@ -50,13 +50,15 @@ sub getsubtree
 sub instancify
 {
 	my ($self, $parent, $name) = @_;
-	nodeinstance->new( node => $self, parent => $parent, name => $name );
+	$self->instanceclass->meta->rebless_instance($self, parent => $parent, name  => $name);
+	$self;
+	#nodeinstance->new( node => $self, parent => $parent, name => $name );
 }
 
 
 package nodeinstance;
 use Moose;
-has node   => (is => 'ro', isa => 'node', required => 1, handles => [qw/list del add getall getsubtree/]);
+extends 'node';
 has name   => (is => 'ro', isa => 'Str');
 has parent => (is => 'ro', isa => 'Object');
 
@@ -64,10 +66,10 @@ sub env
 {
 	my ($self, $key) = @_;
 
-	return $self->node->data->{$key} if exists $self->node->data->{$key};
+	return $self->data->{$key} if exists $self->data->{$key};
 	return undef unless $self->parent;
 	return $self->parent->env($key)  if $self->parent->can('env');
-	return $self->parent->data->{$key} if exists $self->node->data->{$key};
+	return $self->parent->data->{$key} if exists $self->data->{$key};
 	 
 }
 
