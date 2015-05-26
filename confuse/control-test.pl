@@ -50,17 +50,9 @@ sub getpath
 	my ($self, $path) = @_;
 	my ($part, @rest) = (@{$path});
 
-	say "self = ", ($self->can('name') ? $self->name : '(floating)');
-	say "part = ", $part;
-	say "rest = ", join (" ", @rest);
-	say $self->treedump, "\n";
-	
-
 	return 0 unless $self->check($part);
 	return $self->get($part) unless @rest;
 	return $self->get($part)->getpath(\@rest);
-#	return $self->get(@rest) if     @rest == 0;
-#	return $self->getpath(\@rest);
 }
 
 
@@ -126,6 +118,12 @@ sub env
 	 
 }
 
+package leaf;
+use Moose;
+extends 'graphitem';
+
+has content => (is => 'rw') ;
+
 
 package main;
 
@@ -142,9 +140,14 @@ $node1->add('subnode2', $node3 );
 $node2->add('subsubnode1', $node4 );
 $node4->add('3subnode1', $node5 );
 
+my $leaf1 = leaf->new;
+
+$node1->add($leaf1)
+#say Dumper($leaf1);
+
 #say $node1->treedump;
 
 #say $node1->checkpath([qw/subnode1 subsubnode1 nothere/]);
-say $node1->checkpath([qw/subnode1 subsubnode1 /]);
+#say $node1->checkpath([qw/subnode1 subsubnode1 /]);
 #say $node1->check('subnode2');
 #say $node1->check('subsubnode2');
