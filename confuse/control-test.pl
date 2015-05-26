@@ -96,7 +96,8 @@ sub treedump
 	$buf .= " " x $level ; 
 	$buf .= $self->can("name") ? $self->name : "(float)";
 	$buf .= "\n";
-	$buf .= $_->treedump($level + 1) for $self->getall; 
+	
+	$buf .= ($_->can('treedump') ?  $_->treedump($level + 1) : '') for $self->getall; 
 
 	return $buf;
  
