@@ -11,7 +11,7 @@ use Moose;
 has item => (is => 'ro');
 has data => (is => 'ro', isa => "HashRef", default => sub { return {} });
 has instanceclass => (is => 'ro', isa => 'Str');
-
+has root => (is => 'ro', required => 1 );
 sub instancify
 {
 	my ($self, $parent, $name) = @_;
@@ -114,7 +114,7 @@ package graphinstance;
 use Moose::Role;
 
 has name   => (is => 'ro', isa => 'Str');
-has parent => (is => 'ro', isa => 'Object');
+has parent => (is => 'ro', isa => 'Object', required => 1);
 
 sub env
 {
@@ -145,7 +145,29 @@ use Moose;
 extends 'leaf';
 with 'graphinstance';
 
+package root;
+use Moose;
+extends 'node';
+
+has root => (is => 'ro', default => sub {return shift}); 
+sub parent {shift};
+sub name   {''};
+sub instantify {die};
+
 package main;
+
+
+my $root = root->new;
+
+($\,$,) = ("\n", "\t");
+
+print 'name',   $root->name;
+print 'parent', $root->parent;
+print 'root',   $root->root;
+
+say $root->treedump;
+
+#__END__
 
 my $node1 = node->new(data => {node => "node1", foodata => 'foo'} );
 my $node2 = node->new(data => {node => "node2", bardata => 'bar'} );
