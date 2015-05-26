@@ -104,9 +104,10 @@ sub treedump
 }
 
 
-package nodeinstance;
-use Moose;
-extends 'node';
+
+package graphinstance;
+use Moose::Role;
+
 has name   => (is => 'ro', isa => 'Str');
 has parent => (is => 'ro', isa => 'Object');
 
@@ -120,6 +121,11 @@ sub env
 	return $self->parent->data->{$key} if exists $self->data->{$key};
 	 
 }
+
+package nodeinstance;
+use Moose;
+extends 'node';
+with 'graphinstance';
 
 package leaf;
 use Moose;
@@ -148,7 +154,7 @@ my $leaf1 = leaf->new;
 #$node1->add($leaf1)
 #say Dumper($leaf1);
 
-#say $node1->treedump;
+say $node1->treedump;
 
 #say $node1->checkpath([qw/subnode1 subsubnode1 nothere/]);
 #say $node1->checkpath([qw/subnode1 subsubnode1 /]);
