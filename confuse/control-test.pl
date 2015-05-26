@@ -10,6 +10,14 @@ package graphitem;
 use Moose;
 has item => (is => 'ro');
 has data => (is => 'ro', isa => "HashRef", default => sub { return {} });
+has instanceclass => (is => 'ro', isa => 'Str');
+
+sub instancify
+{
+	my ($self, $parent, $name) = @_;
+	$self->instanceclass->meta->rebless_instance($self, parent => $parent, name  => $name);
+	$self;
+}
 
 package node;
 use Moose;
@@ -77,12 +85,6 @@ sub getsubtree
 	return (@own, map {$_->getsubtree} @own);
 }
 
-sub instancify
-{
-	my ($self, $parent, $name) = @_;
-	$self->instanceclass->meta->rebless_instance($self, parent => $parent, name  => $name);
-	$self;
-}
 
 sub treedump
 {
@@ -142,7 +144,7 @@ $node4->add('3subnode1', $node5 );
 
 my $leaf1 = leaf->new;
 
-$node1->add($leaf1)
+#$node1->add($leaf1)
 #say Dumper($leaf1);
 
 #say $node1->treedump;
