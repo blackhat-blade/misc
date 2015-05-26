@@ -19,6 +19,28 @@ sub instancify
 	$self;
 }
 
+sub treedump
+{
+	my ($self,$level) = @_;
+	my $buf = '';
+
+	$level ||= 0;
+
+	$buf .= " " x $level ; 
+	$buf .= $self->can("name") ? $self->name : "(float)";
+	
+	if ($self->can('getall'))
+	{
+		$buf .= "/\n";
+		$buf .= ($_->can('treedump') ?  $_->treedump($level + 1) : '') for $self->getall; 
+	}
+	else 
+	{
+		$buf .= "\n";
+	}
+	return $buf;
+}
+
 package node;
 use Moose;
 extends 'graphitem';
@@ -86,23 +108,6 @@ sub getsubtree
 }
 
 
-sub treedump
-{
-	my ($self,$level) = @_;
-	my $buf = '';
-
-	$level ||= 0;
-
-	$buf .= " " x $level ; 
-	$buf .= $self->can("name") ? $self->name : "(float)";
-	$buf .= "\n";
-	
-	$buf .= ($_->can('treedump') ?  $_->treedump($level + 1) : '') for $self->getall; 
-
-	return $buf;
- 
-}
-
 
 
 package graphinstance;
@@ -131,8 +136,14 @@ package leaf;
 use Moose;
 extends 'graphitem';
 
+has instanceclass => (is => 'ro', default => "leafinstance");
 has content => (is => 'rw') ;
 
+
+package leafinstance;
+use Moose;
+extends 'leaf';
+with 'graphinstance';
 
 package main;
 
@@ -151,8 +162,8 @@ $node4->add('3subnode1', $node5 );
 
 my $leaf1 = leaf->new;
 
-#$node1->add($leaf1)
-#say Dumper($leaf1);
+$node1->add('leaf1', $leaf1);
+say Dumper($node1);
 
 say $node1->treedump;
 
