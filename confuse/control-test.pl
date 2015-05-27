@@ -7,13 +7,10 @@ use lib './lib';
 use graphitem;
 use node;
 use graphinstance;
+use nodeinstance;
 #use Moose;
 
 
-package nodeinstance;
-use Moose;
-extends 'node';
-with 'graphinstance';
 
 package leaf;
 use Moose;
