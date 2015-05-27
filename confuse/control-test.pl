@@ -9,16 +9,11 @@ use node;
 use graphinstance;
 use nodeinstance;
 use leaf;
-#use leafinstance;
+use leafinstance;
 #use Moose;
 
 
 
-
-package leafinstance;
-use Moose;
-extends 'leaf';
-with 'graphinstance';
 
 package root;
 use Moose;
