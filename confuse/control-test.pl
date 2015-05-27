@@ -8,16 +8,11 @@ use graphitem;
 use node;
 use graphinstance;
 use nodeinstance;
+use leaf;
+#use leafinstance;
 #use Moose;
 
 
-
-package leaf;
-use Moose;
-extends 'graphitem';
-
-has instanceclass => (is => 'ro', default => "leafinstance");
-has content => (is => 'rw') ;
 
 
 package leafinstance;
