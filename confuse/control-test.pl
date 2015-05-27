@@ -172,6 +172,10 @@ my $root = root->new;
 my $node1 = $root->createsub('node1', 'node');
 my $node2 = $root->createsub('node2', 'node');
 
+$node1->createsub('leaf1', 'leaf');
+$node1->createsub('leaf2', 'leaf');
+$node1->createsub('node3', 'node')->createsub('subnode1','node');
+
 
 say $root->treedump;
 __END__
