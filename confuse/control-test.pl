@@ -10,21 +10,11 @@ use graphinstance;
 use nodeinstance;
 use leaf;
 use leafinstance;
-#use Moose;
+use root;
 
 
 
 
-package root;
-use Moose;
-extends 'node';
-
-has root => (is => 'ro', default => sub {return shift}); 
-sub parent {shift};
-sub name   {''};
-sub instantify {die};
-
-package main;
 
 
 my $root = root->new;
