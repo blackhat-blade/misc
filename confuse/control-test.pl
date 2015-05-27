@@ -107,8 +107,15 @@ sub getsubtree
 	return (@own, map {$_->getsubtree} @own);
 }
 
-
-
+sub createsub
+{
+	my ($self, $name, $class, @data) = @_;
+	my $o;
+	
+	$o = $class->new(root => $self->root, @data);
+	$self->add($name, $o);
+	return $o;
+}
 
 package graphinstance;
 use Moose::Role;
@@ -161,13 +168,21 @@ my $root = root->new;
 
 ($\,$,) = ("\n", "\t");
 
+
+my $node1 = $root->createsub('node1', 'node');
+my $node2 = $root->createsub('node2', 'node');
+
+
+say $root->treedump;
+__END__
+ 
 print 'name',   $root->name;
 print 'parent', $root->parent;
 print 'root',   $root->root;
 
 say $root->treedump;
 
-#__END__
+__END__
 
 my $node1 = node->new(data => {node => "node1", foodata => 'foo'} );
 my $node2 = node->new(data => {node => "node2", bardata => 'bar'} );
