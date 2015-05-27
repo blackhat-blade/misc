@@ -6,25 +6,9 @@ use Data::Dumper;
 use lib './lib';
 use graphitem;
 use node;
-
+use graphinstance;
 #use Moose;
 
-package graphinstance;
-use Moose::Role;
-
-has name   => (is => 'ro', isa => 'Str');
-has parent => (is => 'ro', isa => 'Object', required => 1);
-
-sub env
-{
-	my ($self, $key) = @_;
-
-	return $self->data->{$key} if exists $self->data->{$key};
-	return undef unless $self->parent;
-	return $self->parent->env($key)  if $self->parent->can('env');
-	return $self->parent->data->{$key} if exists $self->data->{$key};
-	 
-}
 
 package nodeinstance;
 use Moose;
