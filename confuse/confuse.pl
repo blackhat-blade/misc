@@ -53,10 +53,10 @@ sub filename_fixup
 sub e_getattr {
 	my ($file) = filename_fixup(shift);
 
-	print "get addr called with: ", Dumper($file), "\n";
+	print "getattr called with: ", Dumper($file), "\n";
 
 	return -ENOENT() unless $root->checkpath($file);
-	my $size = 0;
+	my $size = $root->getpath($file)->isa('leaf') ? length $root->getpath($file)->content : 0 ;
 	my $type = $root->getpath($file)->isa('leaf') ? 0100 : 0040;
 	my $mode = 0755;
 	
