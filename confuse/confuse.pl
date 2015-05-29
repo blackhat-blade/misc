@@ -47,7 +47,7 @@ sub filename_fixup
 
 	@path = split /\//, $file;
 
-	return '' unless @path;
+	return [''] unless @path;
 	return \@path;
 }
 
