@@ -50,7 +50,7 @@ sub filename_fixup
 
 }
 
-sub e_getattr 
+sub getattr 
 {
 	my ($file) = filename_fixup(shift);
 
@@ -68,7 +68,7 @@ sub e_getattr
 	return ($dev,$ino,$modes,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks);
 }
 
-sub e_getdir 
+sub getdir 
 {
 	my $path = filename_fixup(shift);
 
@@ -79,7 +79,7 @@ sub e_getdir
 	
 }
 
-sub e_open
+sub open
  {
 	my $file = filename_fixup(shift);
 	my ($flags, $fileinfo) = @_;
@@ -94,7 +94,7 @@ sub e_open
 	return (0, $fh);
 }
 
-sub e_read 
+sub read 
 {
 	my ($filename, $buf, $off, $fh) = @_;
 
@@ -109,7 +109,7 @@ sub e_read
 	return substr( $fh->[0]->content, $off, $buf);
 }
 
-sub e_statfs 
+sub statfs 
 {
 	return 255, 1, 1, 1, 1, 2
 }
@@ -150,10 +150,10 @@ maketree $root,
 Fuse::main
 (
 	mountpoint 	=> $mountpoint,
-	getattr 	=> "main::e_getattr",
-	getdir 		=> "main::e_getdir",
-	open   		=> "main::e_open",
-	statfs 		=> "main::e_statfs",
-	read   		=> "main::e_read",
+	getattr 	=> "main::getattr",
+	getdir 		=> "main::getdir",
+	open   		=> "main::open",
+	statfs 		=> "main::statfs",
+	read   		=> "main::read",
 	threaded 	=> 0
 );
