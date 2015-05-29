@@ -118,8 +118,8 @@ sub write
 	my $content = $fh->[0]->content;
 
 	substr ($content, $off, length($buf)) = $buf;
-	$fh->[0]->content;
-
+	$fh->[0]->content($content);
+	
 	length $buf;
 }
 
