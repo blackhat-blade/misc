@@ -75,7 +75,7 @@ sub e_getdir
 	#}
 
 	return -ENOENT() unless $root->checkpath($path);
-	return $root->getpath($path)->getall,0;
+	return (map { $_->name  } $root->getpath($path)->getall )   ,0;
 	
 }
 
