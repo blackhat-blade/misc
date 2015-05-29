@@ -60,6 +60,8 @@ sub e_getdir
 {
 	my $path = filename_fixup(shift);
 
+	print "getdir called for ", Dumper($path), "\n";
+
 	if (@{$path} == 1 && $path->[0] eq '')
 	{
 		return $root->getall(), 0;
