@@ -47,6 +47,9 @@ sub filename_fixup
 
 sub e_getattr {
 	my ($file) = filename_fixup(shift);
+
+	print "get addr called with: ", Dumper($file), "\n";
+
 	return -ENOENT() unless $root->checkpath($file);
 	my $size = 0;
 	my ($modes) = 0;# ($files{$file}{type}<<9) + $files{$file}{mode};
@@ -140,7 +143,7 @@ maketree $root,
 	}
 };
 
-say $root->treedump;
+#say $root->treedump;
 Fuse::main(
 	mountpoint=>$mountpoint,
 	getattr=>"main::e_getattr",
