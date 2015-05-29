@@ -39,15 +39,17 @@ sub maketree
 sub filename_fixup 
 {
 
-	my ($file) = shift;
-        print "asked for file '$file'\n";
+	my ($file, @path);
+
+	$file = shift;
 	$file =~ s!^/!!;
-	#return ['', split /\//, $file];
 
-	my @path = split /\//, $file;
-	@path = ('') unless @path;
-	\@path;
+        print "asked for file '$file'\n";
 
+	@path = split /\//, $file;
+
+	return '' unless @path;
+	return \@path;
 }
 
 sub getattr 
@@ -64,7 +66,7 @@ sub getattr
 	my $modes = ($type<<9) + $mode;
 	my ($dev, $ino, $rdev, $blocks, $gid, $uid, $nlink, $blksize) = (0,0,0,1,0,0,1,1024);
 	my ($atime, $ctime, $mtime);
-	$atime = $ctime = $mtime = 0;#$files{$file}{ctime};
+	$atime = $ctime = $mtime = 0;
 	return ($dev,$ino,$modes,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks);
 }
 
