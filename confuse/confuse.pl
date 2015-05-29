@@ -38,7 +38,6 @@ sub maketree
 
 sub filename_fixup 
 {
-
 	my ($file, @path);
 
 	$file = shift;
@@ -111,6 +110,13 @@ sub read
 	return substr( $fh->[0]->content, $off, $buf);
 }
 
+sub write
+{
+	my ($filename, $buf, $off, $fh) = @_;
+	substr ($fh->[0], $off, length($buf)) = $buf;
+	length $buf;
+}
+
 sub statfs 
 {
 	return 255, 1, 1, 1, 1, 2
@@ -157,5 +163,6 @@ Fuse::main
 	open   		=> "main::open",
 	statfs 		=> "main::statfs",
 	read   		=> "main::read",
+	write		=> "main::write",
 	threaded 	=> 0
 );
