@@ -86,7 +86,7 @@ sub open
 	my ($flags, $fileinfo) = @_;
 	my $fh;
 
-	print("open called $file, $flags, $fileinfo\n");
+	print("open called $file, $flags, ",Dumper($fileinfo), "\n");
 
 	return -ENOENT() unless $root->checkpath($file);
 	return -EISDIR() if $root->getpath($file)->isa('node');
