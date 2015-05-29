@@ -106,7 +106,7 @@ sub e_read {
 	my ($filename, $buf, $off, $fh) = @_;
 
 	print "read from $fh ($filename), $buf \@ $off\n";
-	print "file handle:\n", Dumper($fh);
+	#print "file handle:\n", Dumper($fh);
 
 	return -ENOENT() unless $fh->[0]; 
 	
