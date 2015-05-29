@@ -39,7 +39,7 @@ sub getpath
 	my ($self, $path) = @_;
 	my ($part, @rest) = (@{$path});
 
-	return $self if $part eq '';
+	return $self if $part eq '' && @rest == 0;
 	return 0 unless $self->check($part);
 	return $self->get($part) unless @rest;
 	return $self->get($part)->getpath(\@rest);
