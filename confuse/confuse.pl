@@ -50,7 +50,8 @@ sub filename_fixup
 
 }
 
-sub e_getattr {
+sub e_getattr 
+{
 	my ($file) = filename_fixup(shift);
 
 	print "getattr called with: ", Dumper($file), "\n";
@@ -100,17 +101,18 @@ sub e_read
 	print "read from $fh ($filename), $buf \@ $off\n";
 
 	return -ENOENT() unless $fh->[0]; 
-	
 	return -EINVAL() if $off >  length $fh->[0]->content;
 	return 0 	 if $off == length $fh->[0]->content;
 
-	print "content = ", $fh->[0]->content, "\n";
 	print "retval = '",  substr( $fh->[0]->content, $off, $buf), "'\n";
 
 	return substr( $fh->[0]->content, $off, $buf);
 }
 
-sub e_statfs { return 255, 1, 1, 1, 1, 2 }
+sub e_statfs 
+{
+	return 255, 1, 1, 1, 1, 2
+}
 
 my ($mountpoint) = "";
 $mountpoint = shift(@ARGV) if @ARGV;
@@ -145,13 +147,13 @@ maketree $root,
 	}
 };
 
-#say $root->treedump;
-Fuse::main(
-	mountpoint=>$mountpoint,
-	getattr=>"main::e_getattr",
-	getdir =>"main::e_getdir",
-	open   =>"main::e_open",
-	statfs =>"main::e_statfs",
-	read   =>"main::e_read",
-	threaded=>0
+Fuse::main
+(
+	mountpoint 	=> $mountpoint,
+	getattr 	=> "main::e_getattr",
+	getdir 		=> "main::e_getdir",
+	open   		=> "main::e_open",
+	statfs 		=> "main::e_statfs",
+	read   		=> "main::e_read",
+	threaded 	=> 0
 );
