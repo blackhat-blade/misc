@@ -112,6 +112,8 @@ sub e_read {
 	
 	return -EINVAL() if $off >  length $fh->[0]->content;
 	return 0 	 if $off == length $fh->[0]->content;
+
+	print "content = ", $fh->[0]->content, "\n";
 	return substr $fh->[0]->content, $off, $buf;
 
 #	if(!exists($files{$file}{cont})) {
