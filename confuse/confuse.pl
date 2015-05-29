@@ -113,7 +113,8 @@ sub read
 sub write
 {
 	my ($filename, $buf, $off, $fh) = @_;
-	substr ($fh->[0], $off, length($buf)) = $buf;
+
+	substr ($fh->[0]->content, $off, length($buf)) = $buf;
 	length $buf;
 }
 
