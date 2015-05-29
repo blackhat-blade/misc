@@ -42,7 +42,7 @@ sub filename_fixup
 	my ($file) = shift;
         print "asked for file '$file'\n";
 	$file =~ s!^/!!;
-	return [ split /\//, $file];
+	return ['', split /\//, $file];
 }
 
 sub e_getattr {
