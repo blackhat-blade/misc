@@ -52,7 +52,10 @@ sub e_getattr {
 
 	return -ENOENT() unless $root->checkpath($file);
 	my $size = 0;
-	my ($modes) = 0;# ($files{$file}{type}<<9) + $files{$file}{mode};
+	my $type = ref $root->getpath($file) eq 'node' ? 0040 : 0100;
+	my $mode = 0755;
+	
+	my $modes = ($type<<9) + $mode;
 	my ($dev, $ino, $rdev, $blocks, $gid, $uid, $nlink, $blksize) = (0,0,0,1,0,0,1,1024);
 	my ($atime, $ctime, $mtime);
 	$atime = $ctime = $mtime = 0;#$files{$file}{ctime};
