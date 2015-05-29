@@ -99,14 +99,11 @@ sub e_open
 	return (0, $fh);
 }
 
-sub e_read {
-	# return an error numeric, or binary/text string.  (note: 0 means EOF, "0" will
-	# give a byte (ascii "0") to the reading program)
-	#my ($file) = filename_fixup(shift);
+sub e_read 
+{
 	my ($filename, $buf, $off, $fh) = @_;
 
 	print "read from $fh ($filename), $buf \@ $off\n";
-	#print "file handle:\n", Dumper($fh);
 
 	return -ENOENT() unless $fh->[0]; 
 	
@@ -114,17 +111,9 @@ sub e_read {
 	return 0 	 if $off == length $fh->[0]->content;
 
 	print "content = ", $fh->[0]->content, "\n";
-	return substr( $fh->[0]->content, $off, $buf);
+	print "retval = '",  substr( $fh->[0]->content, $off, $buf), "'\n";
 
-#	if(!exists($files{$file}{cont})) {
-#		return -EINVAL() if $off > 0;
-#		my $context = fuse_get_context();
-#		return sprintf("pid=0x%08x uid=0x%08x gid=0x%08x\n",@$context{'pid','uid','gid'});
-#	}
-#	return -EINVAL() if $off > length($files{$file}{cont});
-#	return 0 if $off == length($files{$file}{cont});
-#	return substr($files{$file}{cont},$off,$buf);
-	
+	return substr( $fh->[0]->content, $off, $buf);
 }
 
 sub e_statfs { return 255, 1, 1, 1, 1, 2 }
