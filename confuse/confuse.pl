@@ -126,22 +126,22 @@ maketree $root,
 {
 	bin => 
 	{
-		sh    => '',
-		true  => '',
-		false => '',
-		echo  => '',	
+		sh    => 'a shell',
+		true  => 'always returns 0',
+		false => 'always returns a non zero value',
+		echo  => 'echos its parameters',	
 	},
 	sbin =>
 	{
-		init => '',
-		halt => '',
-		reboot => '',
+		init => 'useless thing',
+		halt => 'fixes all problems',
+		reboot => 'same as halt but only temporary',
 	},
 	usr =>
 	{
 		bin => 
 		{
-			perl => '',
+			perl => 'all you need',
 		},
 		lib =>
 		{
