@@ -57,7 +57,7 @@ sub e_getattr {
 
 	return -ENOENT() unless $root->checkpath($file);
 	my $size = 0;
-	my $type = ref $root->getpath($file) eq 'leaf' ? 0100 : 0040;
+	my $type = $root->getpath($file)->isa('leaf') ? 0100 : 0040;
 	my $mode = 0755;
 	
 	my $modes = ($type<<9) + $mode;
