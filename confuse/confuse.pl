@@ -84,28 +84,36 @@ sub e_getdir
 	
 }
 
-sub e_open {
-	# VFS sanity check; it keeps all the necessary state, not much to do here.
-    my $file = filename_fixup(shift);
-    my ($flags, $fileinfo) = @_;
-    print("open called $file, $flags, $fileinfo\n");
+sub e_open
+ {
+	my $file = filename_fixup(shift);
+	my ($flags, $fileinfo) = @_;
+	my $fh;
+
+	print("open called $file, $flags, $fileinfo\n");
+
 	return -ENOENT() unless $root->checkpath($file);
 	return -EISDIR() if $root->getpath($file)->isa('node');
-    
-    my $fh = [ rand() ];
-    
-    print("open ok (handle $fh)\n");
-    return (0, $fh);
+ 	$fh = [ $root->getpath($file)  ];
+	print("open ok (handle $fh)\n");
+	return (0, $fh);
 }
 
 sub e_read {
 	# return an error numeric, or binary/text string.  (note: 0 means EOF, "0" will
 	# give a byte (ascii "0") to the reading program)
-	my ($file) = filename_fixup(shift);
-    my ($buf, $off, $fh) = @_;
-    print "read from $file, $buf \@ $off\n";
-    print "file handle:\n", Dumper($fh);
-	return -ENOENT() unless  $root->checkpath($file);
+	#my ($file) = filename_fixup(shift);
+	my ($filename, $buf, $off, $fh) = @_;
+
+	print "read from $fh ($filename), $buf \@ $off\n";
+	print "file handle:\n", Dumper($fh);
+
+	return -ENOENT() unless $fh->[0]; 
+	
+	return -EINVAL() if $off >  length $fh->[0]->content;
+	return 0 	 if $off == length $fh->[0]->content;
+	return substr $fh->[0]->content, $off, $buf;
+
 #	if(!exists($files{$file}{cont})) {
 #		return -EINVAL() if $off > 0;
 #		my $context = fuse_get_context();
