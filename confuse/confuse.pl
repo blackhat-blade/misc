@@ -115,8 +115,11 @@ sub write
 	my ($filename, $buf, $off, $fh) = @_;
 
 	print "writing '$buf' to $fh ($filename=, \@ $off\n ";
+	my $content = $fh->[0]->content;
 
-	substr ($fh->[0]->content, $off, length($buf)) = $buf;
+	substr ($content, $off, length($buf)) = $buf;
+	$fh->[0]->content;
+
 	length $buf;
 }
 
