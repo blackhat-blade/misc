@@ -123,6 +123,21 @@ sub write
 	length $buf;
 }
 
+sub truncate
+{
+	my ($file,$filename, $offset) = undef, @_;
+	my $leaf;
+
+	$file = filename_fixup($filename);
+	print "truncation of $file ($filename) \@ $offset";
+
+	return -ENOENT() unless $root->checkpath($file);
+	$leaf = $root->getpath($file);
+	return EINVAL()  if $offset > length $leaf->content;
+	$leaf->content(substr $leaf->content, 0, $offset);
+	return 0;
+}
+
 sub statfs 
 {
 	return 255, 1, 1, 1, 1, 2
