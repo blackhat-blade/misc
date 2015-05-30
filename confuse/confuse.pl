@@ -125,8 +125,8 @@ sub write
 
 sub truncate
 {
-	my ($file,$filename, $offset) = undef, @_;
-	my $leaf;
+	my ($filename, $offset) = @_;
+	my ($leaf, $file);
 
 	$file = filename_fixup($filename);
 	print "truncation of $file ($filename) \@ $offset";
