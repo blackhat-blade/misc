@@ -150,6 +150,24 @@ sub ftruncate
 	return 0;
 }
 
+sub create
+{
+	my ($path, $mask, $flags) = @_;
+	my $realpath = filename_fixup($path);
+	my $name     = pop @{$realpath};
+
+	my $parentdir;
+	my $sub;
+
+	print "create of $path, called with mask = $mask, flags = $flags\n";
+
+	$parentdir = $root->getpath($realpath);	
+	$sub       = $parentdir->createsub( $name, 'leaf');
+
+	return 0, [$sub];
+
+}
+
 sub statfs 
 {
 	return 255, 1, 1, 1, 1, 2
@@ -199,5 +217,6 @@ Fuse::main
 	write		=> "main::write",
 	truncate	=> "main::truncate",
 	ftruncate	=> "main::ftruncate",
+	create		=> "main::create",
 	threaded 	=> 0
 );
