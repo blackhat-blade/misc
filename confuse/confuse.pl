@@ -116,6 +116,12 @@ sub write
 
 	print "writing '$buf' to $fh ($filename=, \@ $off\n ";
 	my $content = $fh->[0]->content;
+	
+	unless ($off || defined $content)
+	{
+		$fh->[0]->content($buf);
+		return length $buf; 
+	}
 
 	substr ($content, $off, length($buf)) = $buf;
 	$fh->[0]->content($content);
