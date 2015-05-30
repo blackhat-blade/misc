@@ -137,6 +137,18 @@ sub truncate
 	$leaf->content(substr $leaf->content, 0, $offset);
 	return 0;
 }
+ 
+sub ftruncate
+{
+	my ($filename, $offset, $fh) = @_;
+	my $leaf = $fh->[0];
+
+	print "ftruncation of $fh \@ $offset";
+
+	return EINVAL()  if $offset > length $leaf->content;
+	$leaf->content(substr $leaf->content, 0, $offset);
+	return 0;
+}
 
 sub statfs 
 {
@@ -185,5 +197,7 @@ Fuse::main
 	statfs 		=> "main::statfs",
 	read   		=> "main::read",
 	write		=> "main::write",
+	truncate	=> "main::truncate",
+	ftruncate	=> "main::ftruncate",
 	threaded 	=> 0
 );
