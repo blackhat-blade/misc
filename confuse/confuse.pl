@@ -140,7 +140,7 @@ sub write
 
 	if ($off > length $content )
 	{
-		$content .= ' ' x ($off - length $content); 
+		$content .= chr(0) x ($off - length $content); 
 	}
 
 	substr ($content, $off, length($buf)) = $buf;
