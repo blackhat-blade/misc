@@ -114,7 +114,7 @@ sub write
 {
 	my ($filename, $buf, $off, $fh) = @_;
 
-	print "writing '$buf' to $fh ($filename=, \@ $off\n ";
+	print "writing to $fh ($filename)=, \@ $off\n ";
 	my $content = $fh->[0]->content;
 	
 	unless ($off || defined $content)
