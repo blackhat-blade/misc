@@ -204,7 +204,7 @@ sub mkdir
 	my $parentdir;
 	my $sub;
 
-	print "create of $path, called with mask = $mask, flags = $flags\n";
+	print "create of dir $path, called with modes = $modes";
 
 	$parentdir = $root->getpath($realpath);	
 	$sub       = $parentdir->createsub( $name, 'node');
