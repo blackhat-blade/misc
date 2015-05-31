@@ -194,6 +194,25 @@ sub create
 
 }
 
+sub mkdir
+{
+	my ($path, $modes) = @_;
+
+	my $realpath = filename_fixup($path);
+	my $name     = pop @{$realpath};
+
+	my $parentdir;
+	my $sub;
+
+	print "create of $path, called with mask = $mask, flags = $flags\n";
+
+	$parentdir = $root->getpath($realpath);	
+	$sub       = $parentdir->createsub( $name, 'node');
+	
+	return 0;
+
+}
+
 sub statfs 
 {
 	return 255, 1, 1, 1, 1, 2
@@ -245,5 +264,6 @@ Fuse::main
 	truncate	=> "main::truncate",
 	ftruncate	=> "main::ftruncate",
 	create		=> "main::create",
+	mkdir		=> "main::mkdir",
 	threaded 	=> 0
 );
