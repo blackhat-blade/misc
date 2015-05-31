@@ -138,6 +138,11 @@ sub write
 		return length $buf; 
 	}
 
+	if ($off > length $content )
+	{
+		$content .= ' ' x ($off - length $content); 
+	}
+
 	substr ($content, $off, length($buf)) = $buf;
 	$fh->[0]->content($content);
 	
