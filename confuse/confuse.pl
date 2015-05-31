@@ -36,6 +36,21 @@ sub maketree
 	}
 }
 
+sub pathpp
+{
+	my $path = shift;
+	my @path;
+
+	return '(undef)' unless $path;
+	return "(invalid val='$path')" unless ref $path;
+
+	@path = @{$path};
+
+	return '/' if @path == 1 && $path[0] eq '';
+	return '/' . join '/', @path;
+	
+}
+
 sub filename_fixup 
 {
 	my ($file, @path);
@@ -55,7 +70,7 @@ sub getattr
 {
 	my ($file) = filename_fixup(shift);
 
-	print "getattr called with: ", Dumper($file), "\n";
+	print "getattr called with: ", pathpp($file), "\n";
 
 	return -ENOENT() unless $root->checkpath($file);
 	my $size = $root->getpath($file)->isa('leaf') ? length $root->getpath($file)->content : 0 ;
@@ -73,7 +88,7 @@ sub getdir
 {
 	my $path = filename_fixup(shift);
 
-	print "getdir called for ", Dumper($path), "\n";
+	print "getdir called for ", pathpp($path), "\n";
 
 	return -ENOENT() unless $root->checkpath($path);
 	return (map { $_->name  } $root->getpath($path)->getall )   ,0;
@@ -178,6 +193,7 @@ sub statfs
 {
 	return 255, 1, 1, 1, 1, 2
 }
+
 
 my ($mountpoint) = "";
 $mountpoint = shift(@ARGV) if @ARGV;
