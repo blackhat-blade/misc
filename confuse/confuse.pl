@@ -129,7 +129,7 @@ sub write
 {
 	my ($filename, $buf, $off, $fh) = @_;
 
-	print "writing to $fh ($filename)=, \@ $off\n ";
+	print "writing ", length $buf ," to $fh ($filename)  \@ $off\ncursize = ", length($fh->[0]->content), "\n";
 	my $content = $fh->[0]->content;
 	
 	unless ($off || defined $content)
