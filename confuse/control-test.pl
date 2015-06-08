@@ -19,14 +19,10 @@ sub maketree
 
 	foreach my $key (keys %{$subtree})
 	{
-		if (ref $subtree->{$key})
-		{
-			maketree ($parent->createsub($key, 'node'), $subtree->{$key}) ;
-		}
-		else
-		{
-			$parent->createsub($key, 'leaf', content => $subtree->{$key});
-		}
+		my ($name, $class) = split /:/, $key;
+		
+		maketree ($parent->createsub($name, $class), $subtree->{$key}) ;
+		
 	}
 }
 
@@ -40,29 +36,29 @@ my $root = root->new;
 
 maketree $root,
 {
-	bin => 
+	bin:node => 
 	{
-		sh    => '',
-		true  => '',
-		false => '',
-		echo  => '',	
+		sh:leaf    => '',
+		true:leaf  => '',
+		false:leaf => '',
+		echo:leaf  => '',	
 	},
-	sbin =>
+	sbin:node =>
 	{
-		init => '',
-		halt => '',
-		reboot => '',
+		init:leaf => '',
+		halt:leaf => '',
+		reboot:leaf => '',
 	},
-	usr =>
+	usr:node =>
 	{
-		bin => 
+		bin:node => 
 		{
-			perl => '',
+			perl:leaf => '',
 		},
-		lib =>
+		lib:node =>
 		{
 		},
-		src =>
+		src:node =>
 		{
 		}
 	}
