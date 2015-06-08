@@ -12,17 +12,20 @@ use nodeinstance;
 use leaf;
 use leafinstance;
 use root;
+use pgconfig;
 
 sub maketree
 {
 	my ($parent, $subtree) = @_;
 
+
 	foreach my $key (keys %{$subtree})
 	{
-		my ($name, $class) = split /:/, $key;
-		
-		maketree ($parent->createsub($name, $class), $subtree->{$key}) ;
-		
+	        my $class = $subtree->{$key}->{class};
+	        my $data  = $subtree->{$key}->{data};
+	        my $sub  = $subtree->{$key}->{childs};
+
+		maketree ($parent->createsub($key, $class), $sub) ;
 	}
 }
 
@@ -39,13 +42,29 @@ sub file  ($)  {  return {class => 'leaf', data => shift }   }
 
 maketree $root,
 {
-	bin => dir
+	db =>
 	{
+		class  =>  'node',
+		childs =>
+		{
+			db3	=>
+			{
+				class => 'pgconfig',
+				data  =>
+				{
+					log_connections => 1,
+					log_destination => 'syslog',
+				}
+			}
+		}, 
+			
 	},
-	opt => dir
-	{
-	}
-
 };
+
+
+
+
+
+
 
 say $root->treedump;
