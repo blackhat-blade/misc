@@ -36,6 +36,23 @@ sub maketree
 	}
 }
 
+sub maketree2
+{
+	my ($parent, $subtree) = @_;
+
+	foreach my $key (keys %{$subtree})
+	{
+		if (ref $subtree->{$key})
+		{
+			maketree ($parent->createsub($key, 'node'), $subtree->{$key}) ;
+		}
+		else
+		{
+			$parent->createsub($key, 'leaf', content => $subtree->{$key});
+		}
+	}
+}
+
 sub pathpp
 {
 	my $path = shift;

@@ -34,34 +34,18 @@ my $root = root->new;
 ($\,$,) = ("\n", "\t");
 
 
+sub dir   (+%) {  return {class => 'node', data => shift }   }
+sub file  ($)  {  return {class => 'leaf', data => shift }   }
+
 maketree $root,
 {
-	bin:node => 
+	bin => dir
 	{
-		sh:leaf    => '',
-		true:leaf  => '',
-		false:leaf => '',
-		echo:leaf  => '',	
 	},
-	sbin:node =>
+	opt => dir
 	{
-		init:leaf => '',
-		halt:leaf => '',
-		reboot:leaf => '',
-	},
-	usr:node =>
-	{
-		bin:node => 
-		{
-			perl:leaf => '',
-		},
-		lib:node =>
-		{
-		},
-		src:node =>
-		{
-		}
 	}
+
 };
 
 say $root->treedump;
