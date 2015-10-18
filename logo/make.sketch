@@ -1,0 +1,77 @@
+#!/usr/bin/perl
+
+use 5.014;
+use warnings;
+use File::Slurp;
+
+our $SCALE    = 300;
+our $OFFSET_X =   0.5;
+our $OFFSET_Y =   0 ;
+
+sub read_coord_file
+{
+	my $fn = shift;
+	my @l  = read_file $fn;
+	my @r;
+	my @c;
+	my $num = qr/(?: [+-]? \d+ (?:  \. \d+  )  )/x;
+
+	for my $l (@l)
+	{
+		my ( $u, $v, $x, $y );
+		$l =~ s/^\s+//;
+		$l =~ s/#.*//;
+		$l =~ s/\s+$//;
+	
+		unless ($l)
+		{
+			next unless @c;
+			push @r, [@c];
+			@c = ();
+			next;
+		}
+
+		( $x, $y ) = $l =~ / ( $num ) \s+ ( $num ) /x; 
+
+		$u = ( $x + $OFFSET_X ) * $SCALE;
+		$v = ( $y + $OFFSET_Y ) * $SCALE;
+
+		die "parse error" unless defined $x and defined $y;
+		push @c, [ int $u  , int $v ];
+	}
+
+	@r,  @c ? [@c] : ();
+}
+
+sub svg_bloat
+{
+	my @lines = @_;
+	my $svg_t = '<svg x="50" y="50" xmlns="http://www.w3.org/2000/svg"'
+		  . ' xmlns:xlink="http://www.w3.org/1999/xlink">'
+		  . '<svg x="50" y="50">'
+		  . '%s'
+		  . '</svg>'
+		  . '</svg>';
+
+	my $pl_t  = '<polyline style="fill: none; stroke: black" points="%s" />';
+	
+	my $buf   = '';	
+
+	foreach my $line ( @lines )
+	{
+		$buf .= sprintf $pl_t, join ' ', map { join ',', @$_ } @{$line};
+	}
+
+	foreach my $p ( map { @{$_} } @lines )
+	{
+		my ($x, $y) = @{ $p };
+		$buf .= "<text x='$x' y='$y'> $x, $y</text>"; 
+	}
+
+	sprintf $svg_t, $buf;
+}
+
+use Data::Dumper;
+print svg_bloat  read_coord_file shift ;
+ 
+ 
