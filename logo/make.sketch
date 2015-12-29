@@ -4,7 +4,7 @@ use 5.014;
 use warnings;
 use File::Slurp;
 
-our $SCALE    = 300;
+our $SCALE    = 200;
 our $OFFSET_X =   0.5;
 our $OFFSET_Y =   0 ;
 
@@ -69,6 +69,10 @@ sub svg_bloat
 	}
 
 	sprintf $svg_t, $buf;
+}
+
+sub write_coordbin
+{
 }
 
 use Data::Dumper;
